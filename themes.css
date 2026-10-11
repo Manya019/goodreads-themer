@@ -1,0 +1,1623 @@
+/* ==========================================================================
+   Goodreads Themer: themes.css
+   Everything is scoped to html[data-grx-theme], so with the theme set to
+   "Original" nothing here applies. Tune selectors in section 3 if
+   Goodreads changes its markup.
+   ========================================================================== */
+
+/* ---------- 1. Theme tokens ---------- */
+
+html:is([data-grx-theme="fiction"], .theme-fiction) {
+  color-scheme: light;
+  --grx-bg: #e6e2d6;  --grx-bg2: #efebe0;  --grx-bg3: #f8f5ec;
+  --grx-fg: #2a2823;  --grx-muted: #59564d; --grx-border: #c9c3b0;
+  --grx-accent: #1f6068; --grx-accent-fg: #ffffff;
+  --grx-link: #1f6068; --grx-hover: #0e3b41;
+  --grx-body: Georgia, "Times New Roman", serif;
+  --grx-head: Georgia, "Times New Roman", serif;
+  --grx-radius: 3px;
+  --grx-cover-shadow: 3px 4px 0 rgba(42,40,35,.16), 0 10px 20px rgba(42,40,35,.2);
+  --grx-bg-image: linear-gradient(90deg, transparent 0, transparent calc(50% - 400px), rgba(0,0,0,.025) 50%, transparent calc(50% + 400px));
+  --grx-glow: none;
+}
+
+html:is([data-grx-theme="dark-academia"], .theme-dark-academia) {
+  color-scheme: dark;
+  --grx-bg: #1a1511;  --grx-bg2: #231c16;  --grx-bg3: #2e251d;
+  --grx-fg: #e6dac4;  --grx-muted: #b9aa91; --grx-border: #4a3b2c;
+  --grx-accent: #b8924f; --grx-accent-fg: #1a1511;
+  --grx-link: #d3ab62; --grx-hover: #e08a78;
+  --grx-body: Georgia, "Times New Roman", serif;
+  --grx-head: Georgia, "Times New Roman", serif;
+  --grx-radius: 2px;
+  --grx-cover-shadow: 0 0 0 1px rgba(184,146,79,.55), 0 10px 22px rgba(0,0,0,.65);
+  --grx-bg-image:
+    radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.55) 100%),
+    url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .9 0 0 0 0 .7 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grx-glow: none;
+}
+
+html:is([data-grx-theme="thriller"], .theme-thriller) {
+  color-scheme: dark;
+  --grx-bg: #0b0c0e;  --grx-bg2: #131518;  --grx-bg3: #1b1e22;
+  --grx-fg: #e8eaed;  --grx-muted: #b2b8bf; --grx-border: #2b2f35;
+  --grx-accent: #d1121b; --grx-accent-fg: #ffffff;
+  --grx-link: #ee5258; --grx-hover: #ffffff;
+  --grx-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --grx-head: "Arial Narrow", "Segoe UI", Arial, sans-serif;
+  --grx-radius: 0;
+  --grx-cover-shadow: 6px 6px 0 rgba(209,18,27,.75);
+  --grx-bg-image: radial-gradient(ellipse at 50% -25%, rgba(209,18,27,.2), transparent 60%);
+  --grx-glow: none;
+}
+
+html:is([data-grx-theme="mystical"], .theme-mystical) {
+  color-scheme: dark;
+  --grx-bg: #110c22;  --grx-bg2: #1a1333;  --grx-bg3: #251b47;
+  --grx-fg: #f0eafd;  --grx-muted: #c0b4e0; --grx-border: #3d2f70;
+  --grx-accent: #d9b25f; --grx-accent-fg: #1a1030;
+  --grx-link: #c3a6ff; --grx-hover: #ffe3a1;
+  --grx-body: Georgia, "Times New Roman", serif;
+  --grx-head: "Palatino Linotype", Palatino, Georgia, serif;
+  --grx-radius: 6px;
+  --grx-cover-shadow: 0 0 0 1px rgba(217,178,95,.5), 0 0 22px rgba(150,100,255,.45);
+  --grx-bg-image:
+    radial-gradient(1.2px 1.2px at 20px 30px, #fff 0, transparent 100%),
+    radial-gradient(1px 1px at 90px 120px, #e9d9ff 0, transparent 100%),
+    radial-gradient(1.6px 1.6px at 160px 60px, #ffe9b0 0, transparent 100%),
+    radial-gradient(1px 1px at 130px 170px, #cbb6ff 0, transparent 100%),
+    radial-gradient(ellipse at 85% -10%, rgba(125,75,230,.38), transparent 55%),
+    radial-gradient(ellipse at 5% 115%, rgba(200,150,60,.14), transparent 50%);
+  --grx-bg-size: 200px 200px, 263px 263px, 317px 317px, 389px 389px, auto, auto;
+  --grx-glow: 0 0 14px rgba(217,178,95,.45);
+}
+
+/* Custom: popup sets --grx-bg, --grx-fg, --grx-accent inline. The rest derives from them. */
+html:is([data-grx-theme="custom"], .theme-custom) {
+  --grx-bg2: color-mix(in srgb, var(--grx-bg) 93%, var(--grx-fg));
+  --grx-bg3: color-mix(in srgb, var(--grx-bg) 86%, var(--grx-fg));
+  --grx-muted: color-mix(in srgb, var(--grx-fg) 62%, var(--grx-bg));
+  --grx-border: color-mix(in srgb, var(--grx-bg) 80%, var(--grx-fg));
+  --grx-link: var(--grx-accent); --grx-hover: var(--grx-fg);
+  --grx-body: Georgia, "Times New Roman", serif;
+  --grx-head: Georgia, "Times New Roman", serif;
+  --grx-radius: 4px;
+  --grx-cover-shadow: 0 8px 20px rgba(0,0,0,.35);
+  --grx-bg-image: none; --grx-glow: none;
+}
+
+/* ---------- 2. Page foundation ---------- */
+
+html[data-grx-theme] body {
+  background-color: var(--grx-bg) !important;
+  background-image: var(--grx-bg-image) !important;
+  background-size: var(--grx-bg-size, auto) !important;
+  background-attachment: fixed !important;
+  font-family: var(--grx-body) !important;
+}
+html[data-grx-deco="off"][data-grx-theme] body { background-image: none !important; }
+
+/* Theme text tokens are applied without resetting every native container's
+   background or border. Goodreads' original component geometry and surfaces remain intact. */
+html[data-grx-theme] body :where(span, p, li, td, th, dt, dd, label, b, strong, i, em,
+  small, cite, blockquote, h1, h2, h3, h4, h5, h6, button, legend, caption):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg);
+}
+html[data-grx-theme] body :where(h1, h2, h3, h4, h5, h6) { font-family: var(--grx-head); }
+
+html[data-grx-theme] a:not(.grx-preserve-native-colors),
+html[data-grx-theme] a:visited:not(.grx-preserve-native-colors) { color: var(--grx-link) !important; }
+html[data-grx-theme] a:hover:not(.grx-preserve-native-colors),
+html[data-grx-theme] a:focus-visible:not(.grx-preserve-native-colors) { color: var(--grx-hover) !important; }
+html[data-grx-theme] :focus-visible:not(.grx-preserve-native-colors) { outline: 2px solid var(--grx-accent) !important; outline-offset: 2px; }
+html[data-grx-theme] ::selection { background: var(--grx-accent); color: var(--grx-accent-fg); }
+html[data-grx-theme] hr:not(.grx-preserve-native-colors) { border-color: var(--grx-border) !important; }
+
+/* ---------- 3. Surfaces, controls, and text roles ---------- */
+
+/* Headings and titles */
+html[data-grx-theme] h1:not(.grx-preserve-native-colors), html[data-grx-theme] h2:not(.grx-preserve-native-colors), html[data-grx-theme] h3:not(.grx-preserve-native-colors),
+html[data-grx-theme] .gr-h1:not(.grx-preserve-native-colors), html[data-grx-theme] .gr-h2:not(.grx-preserve-native-colors), html[data-grx-theme] .gr-h3:not(.grx-preserve-native-colors),
+html[data-grx-theme] [class*="Text__title"]:not(.grx-preserve-native-colors),
+html[data-grx-theme] [data-testid="bookTitle"]:not(.grx-preserve-native-colors),
+html[data-grx-theme] [data-testid="name"]:not(.grx-preserve-native-colors) {
+  font-family: var(--grx-head) !important;
+  color: var(--grx-fg) !important;
+  text-shadow: var(--grx-glow);
+}
+html[data-grx-theme="thriller"] h1,
+html[data-grx-theme="thriller"] h2,
+html[data-grx-theme="thriller"] .gr-h1,
+html[data-grx-theme="thriller"] [data-testid="bookTitle"] {
+  font-weight: 700; letter-spacing: .02em; text-transform: uppercase;
+}
+html[data-grx-theme="mystical"] h1,
+html[data-grx-theme="mystical"] h2,
+html[data-grx-theme="mystical"] .gr-h1 { letter-spacing: .04em; }
+
+/* Muted text */
+html[data-grx-theme] .greyText:not(.grx-preserve-native-colors), html[data-grx-theme] .grey:not(.grx-preserve-native-colors), html[data-grx-theme] .smallText:not(.grx-preserve-native-colors),
+html[data-grx-theme] .gr-metadataLabel:not(.grx-preserve-native-colors), html[data-grx-theme] time:not(.grx-preserve-native-colors),
+html[data-grx-theme] [class*="subdued" i]:not(.grx-preserve-native-colors), html[data-grx-theme] [class*="Text__italic"]:not(.grx-preserve-native-colors) {
+  color: var(--grx-muted) !important;
+}
+
+/* Cards and boxes */
+html[data-grx-theme] .bigBox:not(.grx-preserve-native-colors),
+html[data-grx-theme] .gr-box:not(.grx-preserve-native-colors),
+html[data-grx-theme] .gr-boxShadow:not(.grx-preserve-native-colors),
+html[data-grx-theme] .gr-reviewBox:not(.grx-preserve-native-colors),
+html[data-grx-theme] [class*="Card" i]:not(img):not(.grx-preserve-native-colors):not([class*="Book" i]):not([data-testid*="book" i]) {
+  background-color: color-mix(in srgb, var(--grx-bg2) 88%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--grx-border) 78%, transparent) !important;
+  border-radius: calc(var(--grx-radius) + 4px) !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,.08) !important;
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+}
+
+/* Floating layers: menus, dialogs, tooltips need a solid fill */
+html[data-grx-theme] body [role="dialog"], html[data-grx-theme] body [role="menu"],
+html[data-grx-theme] body [role="listbox"], html[data-grx-theme] body [role="tooltip"],
+html[data-grx-theme] body [class*="Popover"], html[data-grx-theme] body [class*="Dropdown"],
+html[data-grx-theme] body [class*="Tooltip"], html[data-grx-theme] body .gr-dropdown {
+  /* Menus and search suggestions are opaque surfaces; don't blur the book covers underneath. */
+  background-color: var(--grx-bg3) !important;
+  border: 1px solid var(--grx-border) !important;
+  border-radius: calc(var(--grx-radius) + 3px) !important;
+  box-shadow: 0 12px 28px rgba(0,0,0,.16) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+/* Goodreads' book autocomplete/search suggestions must stay solid and keep native cover artwork. */
+html[data-grx-theme] body :is(
+  [class*="SearchAutocomplete" i], [class*="searchAutocomplete" i],
+  [class*="SearchSuggestion" i], [class*="searchSuggestion" i],
+  [class*="SearchResults" i], [class*="searchResults" i],
+  [class*="searchBoxResults" i], [class*="autocomplete" i], [data-testid*="search" i][role="listbox"]
+):not(.grx-logo-link):not(#grx-x) {
+  background-color: var(--grx-bg3) !important;
+  opacity: 1 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+
+/* Form controls */
+html[data-grx-theme] input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not(.grx-preserve-native-colors),
+html[data-grx-theme] textarea:not(.grx-preserve-native-colors), html[data-grx-theme] select:not(.grx-preserve-native-colors) {
+  background: var(--grx-bg3) !important;
+  color: var(--grx-fg) !important;
+  border: 1px solid var(--grx-border) !important;
+  border-radius: var(--grx-radius) !important;
+  font-family: var(--grx-body) !important;
+}
+html[data-grx-theme] :not(.grx-preserve-native-colors)::placeholder { color: var(--grx-muted) !important; opacity: 1; }
+
+/* Buttons: primary is solid accent, secondary is outlined */
+html[data-grx-theme] .gr-button:not(.grx-preserve-native-colors), html[data-grx-theme] .gr-button--large:not(.grx-preserve-native-colors),
+html[data-grx-theme] input[type="submit"]:not(.grx-preserve-native-colors), html[data-grx-theme] button[type="submit"]:not(.grx-preserve-native-colors),
+html[data-grx-theme] [class*="Button--primary"]:not(.grx-preserve-native-colors), html[data-grx-theme] [class*="Button--wtr"]:not(.grx-preserve-native-colors),
+html[data-grx-theme] [class*="Button--wtr"] *:not(.grx-preserve-native-colors), html[data-grx-theme] [class*="Button--primary"] *:not(.grx-preserve-native-colors) {
+  color: var(--grx-accent-fg) !important;
+}
+html[data-grx-theme] .gr-button:not(.grx-preserve-native-colors), html[data-grx-theme] .gr-button--large:not(.grx-preserve-native-colors),
+html[data-grx-theme] input[type="submit"]:not(.grx-preserve-native-colors), html[data-grx-theme] button[type="submit"]:not(.grx-preserve-native-colors),
+html[data-grx-theme] [class*="Button--primary"]:not(.grx-preserve-native-colors), html[data-grx-theme] [class*="Button--wtr"]:not(.grx-preserve-native-colors) {
+  background: var(--grx-accent) !important;
+  border: 1px solid var(--grx-accent) !important;
+  border-radius: var(--grx-radius) !important;
+  font-family: var(--grx-body) !important;
+}
+html[data-grx-theme] [class*="Button--secondary"]:not(.grx-preserve-native-colors), html[data-grx-theme] [class*="Button--tertiary"]:not(.grx-preserve-native-colors) {
+  background: transparent !important;
+  border: 1px solid var(--grx-accent) !important;
+  border-radius: var(--grx-radius) !important;
+}
+html[data-grx-theme] [class*="Button--secondary"] *:not(.grx-preserve-native-colors), html[data-grx-theme] [class*="Button--tertiary"] *:not(.grx-preserve-native-colors) {
+  color: var(--grx-accent) !important;
+}
+
+/* Tables (My Books shelf view) */
+html[data-grx-theme] table th:not(.grx-preserve-native-colors) { color: var(--grx-muted) !important; font-family: var(--grx-head); }
+html[data-grx-theme] table tr:hover td:not(.grx-preserve-native-colors) { background-color: var(--grx-bg2) !important; }
+
+/* Native cover images deliberately have no theme-applied radius, shadow, tint, or filter. */
+
+/* ---------- 4. Decorations (turn off with the "Decorations" toggle) ---------- */
+
+/* Thriller decoration is kept on the page chrome only; book-cover art stays original. */
+html[data-grx-theme="thriller"][data-grx-deco="on"]::before {
+  content: ""; position: fixed; inset: 0 0 auto 0; height: 3px;
+  background: var(--grx-accent); z-index: 2147483647; pointer-events: none;
+}
+
+/* Mystical: gilt double rule under main headings */
+html[data-grx-theme="mystical"][data-grx-deco="on"] h1::after,
+html[data-grx-theme="mystical"][data-grx-deco="on"] .gr-h1::after {
+  content: ""; display: block; height: 5px; margin-top: 8px;
+  border-top: 1px solid var(--grx-accent); border-bottom: 1px solid var(--grx-accent);
+  opacity: .7;
+}
+
+/* Dark academia: brass rule under page titles */
+html[data-grx-theme="dark-academia"][data-grx-deco="on"] h1::after,
+html[data-grx-theme="dark-academia"][data-grx-deco="on"] .gr-h1::after {
+  content: ""; display: block; width: 3.5em; height: 2px; margin-top: 8px; background: var(--grx-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-grx-theme] * { transition: none !important; }
+}
+
+/* ---------- 5. More themes, cover tint, declutter ---------- */
+
+/* Aurora: black stage, luminous color, tall glowing cards, display serif */
+html:is([data-grx-theme="aurora"], .theme-aurora) {
+  color-scheme: dark;
+  --grx-bg: #050507;  --grx-bg2: #0e0e12;  --grx-bg3: #17171d;
+  --grx-fg: #f6f4f1;  --grx-muted: #bcb9c5; --grx-border: #26262e;
+  --grx-accent: #ff6a3d; --grx-accent-fg: #160a05;
+  --grx-link: #ffb86b; --grx-hover: #ffffff;
+  --grx-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --grx-head: Georgia, "Times New Roman", serif;
+  --grx-radius: 14px; --grx-card-radius: 20px;
+  --grx-cover-shadow: 0 18px 44px -14px rgba(255,106,61,.55);
+  --grx-bg-image:
+    radial-gradient(ellipse at 12% -5%, rgba(255,70,40,.18), transparent 50%),
+    radial-gradient(ellipse at 92% 8%, rgba(40,120,255,.16), transparent 50%),
+    radial-gradient(ellipse at 50% 110%, rgba(255,190,40,.09), transparent 55%);
+  --grx-glow: none; --grx-tint-a: 55%;
+}
+
+/* Storybook: retro print, teal bar, vermilion, warm paper */
+html:is([data-grx-theme="storybook"], .theme-storybook) {
+  color-scheme: light;
+  --grx-bg: #f1e6cd;  --grx-bg2: #f8f0dc;  --grx-bg3: #fffaf0;
+  --grx-fg: #1f3238;  --grx-muted: #4a5d61; --grx-border: #cdbb95;
+  --grx-accent: #d9482f; --grx-accent-fg: #171717;
+  --grx-link: #1f6a73; --grx-hover: #d9482f;
+  --grx-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --grx-head: Georgia, "Times New Roman", serif;
+  --grx-radius: 12px; --grx-card-radius: 14px;
+  --grx-header-bg: #243b42; --grx-header-fg: #f1e6cd;
+  --grx-cover-shadow: 4px 4px 0 #1f3238;
+  --grx-bg-image: none; --grx-glow: none; --grx-tint-a: 24%;
+}
+
+html[data-grx-theme="storybook"] .siteHeader, html[data-grx-theme="storybook"] .Header,
+html[data-grx-theme="storybook"] header[class*="Header"] * { color: var(--grx-header-fg); }
+
+/* Light themes get a gentler cover wash than dark ones */
+html[data-grx-theme="fiction"] { --grx-tint-a: 22%; --grx-card-radius: 4px; }
+html[data-grx-theme="dark-academia"] { --grx-tint-a: 48%; --grx-card-radius: 2px; }
+html[data-grx-theme="thriller"] { --grx-tint-a: 42%; --grx-card-radius: 0; }
+html[data-grx-theme="mystical"] { --grx-tint-a: 50%; --grx-card-radius: 14px; }
+html[data-grx-theme="custom"] { --grx-tint-a: 40%; --grx-card-radius: 6px; }
+
+/* ---------- Cover tint: book pages pick up the cover's colors ---------- */
+html[data-grx-tint="on"][data-grx-theme][data-grx-cover] body {
+  background-image:
+    radial-gradient(ellipse 120% 70% at 50% -10%, color-mix(in srgb, var(--grx-cover-1) var(--grx-tint-a, 45%), transparent), transparent 72%),
+    radial-gradient(ellipse 70% 55% at 100% 28%, color-mix(in srgb, var(--grx-cover-2) calc(var(--grx-tint-a, 45%) * .7), transparent), transparent 72%),
+    var(--grx-bg-image) !important;
+  background-size: auto, auto, var(--grx-bg-size, auto) !important;
+  transition: background-color .4s ease;
+}
+
+/* My Books enhancement only hides the original shelf content, never global navigation. */
+html[data-grx-home] .grx-native-content-hidden { display: none !important; }
+html[data-grx-home] #grx-host { display: block !important; width: 100%; background: transparent !important; }
+
+/* ---------- Declutter: advertisements only, preserving the site footer ---------- */
+html[data-grx-declutter="on"] :is(
+  .adsbygoogle, ins.adsbygoogle, [id^="google_ads"], [id^="div-gpt-ad"], [id^="gpt-"],
+  [class*="gpt-ad" i], [class*="sponsored" i], .gr-ad, .bookPageAd,
+  iframe[src*="doubleclick"], iframe[src*="googlesyndication"], iframe[id^="google_ads"]
+) { display: none !important; }
+
+/* ---------- Native Goodreads polish: restrained glass, strong contrast ---------- */
+html[data-grx-theme] {
+  --grx-glass: color-mix(in srgb, var(--grx-bg2) 84%, transparent);
+  --grx-glass-strong: color-mix(in srgb, var(--grx-bg3) 96%, transparent);
+}
+html[data-grx-theme] body { scroll-behavior: smooth; }
+html[data-grx-theme] body :is(h1, h2, h3, h4, h5, h6, p, li, td, th, dd, dt, label,
+  span, strong, em, small, cite, blockquote, figcaption, summary, legend, caption,
+  [class*="Text__body"], [class*="Description"], [class*="description"],
+  [class*="metadata"], [class*="Metadata"], [class*="author"], [class*="Author"],
+  [class*="reviewText"], [class*="review-text"]):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+}
+html[data-grx-theme] body a:not(.grx-preserve-native-colors) { color: var(--grx-link) !important; }
+html[data-grx-theme] body a:not(.grx-preserve-native-colors) :is(span, strong, em, small, b, i):not(.grx-preserve-native-colors) { color: inherit !important; }
+html[data-grx-theme] body :is(.greyText, .grey, .smallText, time, [class*="subdued" i],
+  [class*="metadataLabel" i], [class*="caption" i], [class*="secondaryText" i]):not(.grx-preserve-native-colors) {
+  color: var(--grx-muted) !important; opacity: 1 !important;
+}
+html[data-grx-theme] body :is(input, textarea, select, button):not(.grx-preserve-native-colors) { font-family: var(--grx-body) !important; }
+html[data-grx-theme] body :is(input, textarea, select):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important; background-color: var(--grx-bg3) !important;
+  border-color: var(--grx-border) !important;
+}
+html[data-grx-theme] body :is(input, textarea, select):not(.grx-preserve-native-colors)::placeholder { color: var(--grx-muted) !important; opacity: 1 !important; }
+
+/* Keep Goodreads' complete native header/menu, restyled as a compact glass bar. */
+
+html[data-grx-theme] :is(.siteHeader, #siteHeader, #topNavContainer, .Header,
+  header[class*="Header"], nav[class*="Header"]) :is(a, button, [role="button"], svg):not(.grx-preserve-native-colors) {
+  color: var(--grx-header-fg, var(--grx-fg)) !important;
+}
+html[data-grx-theme] :is(.siteHeader, #siteHeader, #topNavContainer, .Header,
+  header[class*="Header"]) :is(button, [role="button"], a[aria-label], a[title]):not(.grx-preserve-native-colors):not(.grx-icon-btn) {
+  border-radius: 999px !important;
+  background-color: color-mix(in srgb, var(--grx-bg3) 76%, transparent) !important;
+  transition: background-color .18s ease;
+}
+
+/* Book-page polish is intentionally color-only. Keep Goodreads' native grid,
+   sizing, columns, edition rows, recommendation rails, and review form geometry. */
+html[data-grx-theme] body :is(#bookTitle, [data-testid="bookTitle"],
+  [class*="BookPage__title"], .bookTitle):not(.grx-preserve-native-colors) { color: var(--grx-fg) !important; }
+html[data-grx-theme] body :is(#bookAuthors, .authorName, [class*="BookPage__authors"],
+  [data-testid*="author" i]):not(.grx-preserve-native-colors) { color: var(--grx-muted) !important; }
+html[data-grx-theme] body :is(.bigBox, .gr-box):not(.grx-preserve-native-colors) { border-color: var(--grx-border) !important; }
+html[data-grx-theme] body :is(.coverRow, .carousel, [class*="Carousel" i], [data-testid*="carousel" i],
+  [class*="similarBooks" i], [class*="recommendation" i], [class*="relatedBooks" i],
+  [id*="similar" i], [id*="recommend" i], [id*="related" i]):not(.grx-preserve-native-colors) {
+  border-color: var(--grx-border) !important; color: var(--grx-fg) !important;
+}
+/* Recommendation and edition thumbnails inherit Goodreads' original image styling. */
+
+/* Gentle motion, reduced when the OS requests it. */
+html[data-grx-theme] body :is(a, button, input, select, textarea, [role="button"]) {
+  transition: color .16s ease, background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-grx-theme] body *, html[data-grx-theme] body *::before, html[data-grx-theme] body *::after {
+    animation: none !important; transition: none !important; scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- 6. Native Goodreads pages: browse, profile, discovery, recommendations ---------- */
+
+/* Each theme class mirrors the active preference on both html and body.
+   Variables remain scoped to the root, so components inherit one palette. */
+html.theme-fiction, body.theme-fiction { --grx-theme-family: fiction; }
+html.theme-dark-academia, body.theme-dark-academia { --grx-theme-family: dark-academia; }
+html.theme-thriller, body.theme-thriller { --grx-theme-family: thriller; }
+html.theme-mystical, body.theme-mystical { --grx-theme-family: mystical; }
+html.theme-aurora, body.theme-aurora { --grx-theme-family: aurora; }
+html.theme-storybook, body.theme-storybook { --grx-theme-family: storybook; }
+html.theme-custom, body.theme-custom { --grx-theme-family: custom; }
+
+/* Theme controls deliberately skip logo/search/native bookshelf regions. */
+html[data-grx-theme] body :is(button, [role="button"], input[type="button"], input[type="submit"], .gr-button):not(.grx-preserve-native-colors) {
+  text-shadow: none !important;
+  border-color: color-mix(in srgb, var(--grx-border) 88%, transparent) !important;
+}
+html[data-grx-theme] body :is(button:not(.gr-button):not([class*="Button--primary"]), [role="button"]:not([class*="Button--primary"])):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: color-mix(in srgb, var(--grx-bg3) 86%, transparent) !important;
+}
+html[data-grx-theme] body :is(button, [role="button"], input[type="button"], input[type="submit"], select, option):disabled:not(.grx-preserve-native-colors) {
+  opacity: .72 !important;
+  color: var(--grx-muted) !important;
+}
+html[data-grx-theme] body :is(.gr-button, .gr-button--large, [class*="Button--primary"], [class*="Button--wtr"], input[type="submit"], button[type="submit"]):not(.grx-preserve-native-colors) {
+  color: var(--grx-accent-fg) !important;
+  background: var(--grx-accent) !important;
+  border-color: var(--grx-accent) !important;
+}
+html[data-grx-theme] body :is(.gr-button, .gr-button--large, [class*="Button--primary"], [class*="Button--wtr"], input[type="submit"], button[type="submit"]):not(.grx-preserve-native-colors) *:not(.grx-preserve-native-colors) {
+  color: inherit !important;
+}
+html[data-grx-theme] body :is(.greyText, .grey, .smallText, [class*="subdued" i], [class*="secondaryText" i], [class*="metadataLabel" i]):not(.grx-preserve-native-colors) {
+  color: var(--grx-muted) !important;
+  opacity: 1 !important;
+}
+html[data-grx-theme] body :is(input, textarea, select):not(.grx-preserve-native-colors) { caret-color: var(--grx-accent); }
+html[data-grx-theme] body :is(input, textarea, select):not(.grx-preserve-native-colors):focus-visible { outline-color: var(--grx-accent) !important; }
+
+/* Image visibility safeguard only. Native Goodreads CSS owns dimensions, crop, radius and shadow. */
+html[data-grx-theme] body :is(
+  img[src*="/books/"], img[src*="/books1/"], img[src*="compressed.photo.goodreads.com/books/"],
+  img.bookCover, .bookCover img, .bookImage img, .coverImage img,
+  [class*="BookCover" i] img, [class*="BookCard__cover" i] img,
+  [class*="BookCard__image" i] img, [data-testid*="bookCover" i] img
+):not(.grx-preserve-native-colors) {
+  visibility: visible !important;
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  mix-blend-mode: normal !important;
+  position: relative !important;
+  z-index: 1 !important;
+  background-color: transparent !important;
+}
+/* Do not force a foreground on major Goodreads containers: native components and
+   opted-out shelves should inherit their original site palette. */
+html[data-grx-theme] body :is(.greyText, .grey, .smallText, time, [class*="subdued" i],
+  [class*="metadataLabel" i], [class*="caption" i], [class*="secondaryText" i]):not(.grx-preserve-native-colors) {
+  color: var(--grx-muted) !important;
+}
+html[data-grx-theme] body :is(.moreLink, .showMore, [class*="showMore" i], [class*="ShowMore" i],
+  [class*="expandLink" i], [class*="readMore" i], .reviewText .more, .description .more,
+  button[aria-label*="more" i], a[aria-label*="more" i]) {
+  color: var(--grx-link) !important;
+  background-color: color-mix(in srgb, var(--grx-bg3) 82%, transparent) !important;
+  background-image: none !important;
+  border-color: var(--grx-border) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06) !important;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+
+/* Native Editions / Readers Also Enjoyed / Other Books sections stay in Goodreads'
+   original palette. Only visibility is guarded; no text, link, surface, or border
+   colors are applied to these sections. */
+html[data-grx-theme] body .grx-theme-bookshelf,
+html[data-grx-theme] body .grx-theme-editions,
+html[data-grx-theme] body .grx-theme-recommendations,
+html[data-grx-theme] body .grx-theme-other-books {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+html[data-grx-theme] body .grx-theme-bookshelf img,
+html[data-grx-theme] body .grx-theme-editions img,
+html[data-grx-theme] body .grx-theme-recommendations img,
+html[data-grx-theme] body .grx-theme-other-books img {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* The logo remains native; the site search is theme-aware so the field, placeholder,
+   and action remain readable on both light and dark palettes. Geometry stays native. */
+
+html[data-grx-theme] body :is(#topNavContainer, #siteHeader, .siteHeader, .Header, header[class*="Header" i])
+  :is(input[type="search"], input[name="q"], input[placeholder*="search" i])::placeholder {
+  color: var(--grx-muted) !important;
+  -webkit-text-fill-color: var(--grx-muted) !important;
+  opacity: 1 !important;
+}
+
+/* Profile pages: paint the common native profile panels with the active theme's
+   surface/foreground pair. Do not alter profile widths, columns, centering, or order. */
+html[data-grx-profile-page][data-grx-theme] body :is(
+  #profile, .userProfile, .profileHeader, .profileHeader__details, .userInfo, .userDetails,
+  .userProfileInfo, .userProfileBio, .profileInfo, .profileContent, .userStats, .friendBox,
+  .friendsList, .followersList, .followingList, .userReviews, .friendReviews, .userReview,
+  .review, .reviewText, .userInfoTable, [data-testid*="profile" i], [class*="ProfileCard" i]
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: color-mix(in srgb, var(--grx-bg2) 94%, transparent) !important;
+  border-color: var(--grx-border) !important;
+}
+html[data-grx-profile-page][data-grx-theme] body :is(
+  #profile, .userProfile, .profileHeader, .profileHeader__details, .userInfo, .userDetails,
+  .userProfileInfo, .userProfileBio, .profileInfo, .profileContent, .userStats, .friendBox,
+  .friendsList, .followersList, .followingList, .userReviews, .friendReviews, .userReview,
+  .review, .reviewText, .userInfoTable, [data-testid*="profile" i], [class*="ProfileCard" i]
+) :is(h1, h2, h3, h4, p, span, strong, b, em, small, label, li, dt, dd, td, th):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+}
+html[data-grx-profile-page][data-grx-theme] body :is(
+  #profile, .userProfile, .profileHeader, .profileHeader__details, .userInfo, .userDetails,
+  .userProfileInfo, .userProfileBio, .profileInfo, .profileContent, .userStats, .friendBox,
+  .friendsList, .followersList, .followingList, .userReviews, .friendReviews, .userReview,
+  .review, .reviewText, .userInfoTable, [data-testid*="profile" i], [class*="ProfileCard" i]
+) a:not(.grx-preserve-native-colors) { color: var(--grx-link) !important; }
+html[data-grx-profile-page][data-grx-theme] body :is(
+  #profile, .userProfile, .profileHeader, .userInfo, .userDetails, .userProfileInfo,
+  .profileInfo, .profileContent, .userStats, .friendBox, .friendsList, .followersList,
+  .followingList, .userReviews, .friendReviews, .userReview, .review, .reviewText,
+  [data-testid*="profile" i]
+) :is(.greyText, .grey, .smallText, time, [class*="subdued" i], [class*="metadataLabel" i], [class*="secondaryText" i]) {
+  color: var(--grx-muted) !important;
+}
+html[data-grx-profile-page][data-grx-theme] body :is(input, textarea, select) {
+  color: var(--grx-fg) !important;
+  background-color: var(--grx-bg3) !important;
+  border-color: var(--grx-border) !important;
+}
+html[data-grx-profile-page][data-grx-theme] body :is(input, textarea, select)::placeholder {
+  color: var(--grx-muted) !important;
+  opacity: 1 !important;
+}
+
+/* Goodreads discovery routes: Choice Awards, New Releases, popular-by-date, genre,
+   browse, and list pages use the same theme tokens without layout replacement. */
+html[data-grx-discovery-page][data-grx-theme] body {
+  color: var(--grx-fg) !important;
+}
+html[data-grx-discovery-page][data-grx-theme] body :is(
+  .bigBox, .gr-box, .gr-boxShadow, .bookBox, .listBox, .elementList, .resultsList,
+  .featuredBox, .choiceAwards, [class*="ChoiceAwards" i], [class*="awardResults" i],
+  [class*="NewRelease" i], [class*="newRelease" i], [data-testid*="award" i], [data-testid*="release" i]
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: color-mix(in srgb, var(--grx-bg2) 94%, transparent) !important;
+  border-color: var(--grx-border) !important;
+}
+html[data-grx-discovery-page][data-grx-theme] body :is(
+  .bigBox, .gr-box, .gr-boxShadow, .bookBox, .listBox, .elementList, .resultsList,
+  .featuredBox, .choiceAwards, [class*="ChoiceAwards" i], [class*="awardResults" i],
+  [class*="NewRelease" i], [class*="newRelease" i], [data-testid*="award" i], [data-testid*="release" i]
+) :is(h1, h2, h3, h4, p, span, strong, b, em, small, label, li, dt, dd, td, th):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+}
+html[data-grx-discovery-page][data-grx-theme] body :is(
+  .bigBox, .gr-box, .gr-boxShadow, .bookBox, .listBox, .elementList, .resultsList,
+  .featuredBox, .choiceAwards, [class*="ChoiceAwards" i], [class*="awardResults" i],
+  [class*="NewRelease" i], [class*="newRelease" i], [data-testid*="award" i], [data-testid*="release" i]
+) a:not(.grx-preserve-native-colors) { color: var(--grx-link) !important; }
+
+/* Hide known ad placements when
+"Hide ads" is enabled. Specific ad containers are hidden without matching generic "ad" substrings
+   in normal Goodreads controls or book content. */
+html[data-grx-declutter="on"] :is(
+  .adsbygoogle, ins.adsbygoogle, [id^="google_ads" i], [id^="div-gpt-ad" i], [id^="gpt-ad" i],
+  [class*="gpt-ad" i], [class*="adSlot" i], [class*="ad-slot" i], [class*="adContainer" i],
+  [class*="ad-container" i], [class*="adPlaceholder" i], [class*="ad-placeholder" i],
+  [class*="advertisement" i], [id*="advertisement" i], [data-testid*="advertisement" i],
+  [aria-label="advertisement" i], [aria-label="sponsored content" i], [data-ad-slot], [data-ad-client],
+  [data-google-query-id], .gr-ad, .gr_ad, .bookPageAd, .ad, #ad, .adUnit, .ad-unit, .adContainer,
+  .ad-container, .adPlaceholder, .ad-placeholder, .advertisement, .advert, .sponsored-post,
+  iframe[src*="doubleclick" i], iframe[src*="googlesyndication" i], iframe[src*="amazon-adsystem" i],
+  iframe[id^="google_ads" i], iframe[src*="/ads/" i]
+) { display: none !important; visibility: hidden !important; }
+
+/* Keep profile page's native two-column flow, but neutralize legacy white panels
+   which otherwise leave theme-colored profile text unreadable. */
+html[data-grx-profile-page][data-grx-theme] body :is(
+  .leftContainer, .rightContainer, .mainContent, #mainContent, #content, #main,
+  .userProfile, #profile, .profileContent, .profileHeader, .profileInfo
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: color-mix(in srgb, var(--grx-bg) 96%, var(--grx-bg2)) !important;
+}
+
+/* Discovery pages have legacy wrappers outside the standard bookBox classes.
+   Apply a theme surface and readable text to those wrappers without changing flow. */
+html[data-grx-discovery-page][data-grx-theme] body :is(
+  .leftContainer, .rightContainer, .mainContent, #mainContent, #content, #main,
+  .mainContentFloat, .pageContent, .choiceAwards, .choiceAwardsPage, .newReleases,
+  .newReleasesPage, .awardPage, .popularBooks, [class*="ChoiceAwardsPage" i],
+  [class*="NewReleasesPage" i], [data-testid*="choice-award" i], [data-testid*="new-releases" i]
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: color-mix(in srgb, var(--grx-bg) 96%, var(--grx-bg2)) !important;
+}
+
+/* One consistent glass surface for the full header. Use the palette foreground
+   for all labels, icons and text-based logo variants, while keeping logo artwork. */
+
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .Header, header[class*="Header" i]
+) :is(button, [role="button"], a[aria-label], a[title]):not(.grx-preserve-native-colors):hover,
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .Header, header[class*="Header" i]
+) :is([aria-expanded="true"], [aria-current="page"]):not(.grx-preserve-native-colors) {
+  color: var(--grx-header-fg, var(--grx-fg)) !important;
+  background-color: color-mix(in srgb, var(--grx-accent) 18%, var(--grx-header-bg, var(--grx-bg3))) !important;
+  border-color: color-mix(in srgb, var(--grx-accent) 45%, var(--grx-border)) !important;
+}
+
+/* Edit Profile: soften the existing form surfaces without changing Goodreads'
+   structure, field order, page columns or native widths. */
+html[data-grx-profile-edit][data-grx-theme] body :is(
+  #main, #mainContent, #content, .mainContent, .mainContentFloat, .pageContent
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: transparent !important;
+}
+html[data-grx-profile-edit][data-grx-theme] body :is(
+  .profileSettings, .editProfile, .edit-profile, .userEdit, .accountSettings,
+  #edit_user, .settingsSection, .bigBox, .gr-box, .gr-boxShadow, .formBox,
+  .form-box, fieldset, .setting,
+  #main form, #mainContent form, #content form, .mainContent form,
+  .mainContentFloat form, .pageContent form, form[action*="user" i], form[action*="profile" i]
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: color-mix(in srgb, var(--grx-bg2) 94%, var(--grx-bg)) !important;
+  border-color: var(--grx-border) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .08) !important;
+}
+html[data-grx-profile-edit][data-grx-theme] body :is(
+  .formRow, .form-row, .field, .form-group, .formGroup, .inputRow
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: transparent !important;
+  border-color: var(--grx-border) !important;
+  box-shadow: none !important;
+}
+html[data-grx-profile-edit][data-grx-theme] body :is(
+  #main, #mainContent, #content, .mainContent, .mainContentFloat, .pageContent,
+  .profileSettings, .editProfile, .edit-profile, .userEdit, .accountSettings,
+  #edit_user, .settingsSection, .bigBox, .gr-box, .gr-boxShadow, .formBox,
+  .form-box, fieldset, .setting
+) :is(label, legend, h1, h2, h3, h4, p, span, small, strong, b, li, dt, dd):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+}
+html[data-grx-profile-edit][data-grx-theme] body :is(
+  #main, #mainContent, #content, .mainContent, .mainContentFloat, .pageContent,
+  .profileSettings, .editProfile, .edit-profile, .userEdit, .accountSettings,
+  #edit_user, .settingsSection, .bigBox, .gr-box, .gr-boxShadow, .formBox,
+  .form-box, fieldset, .setting
+) :is(.greyText, .grey, .smallText, time, [class*="subdued" i], [class*="metadataLabel" i]) {
+  color: var(--grx-muted) !important;
+}
+html[data-grx-profile-edit][data-grx-theme] body :is(
+  #main, #mainContent, #content, .mainContent, .mainContentFloat, .pageContent,
+  .profileSettings, .editProfile, .edit-profile, .userEdit, .accountSettings,
+  #edit_user, .settingsSection, .bigBox, .gr-box, .gr-boxShadow, .formBox,
+  .form-box, fieldset, .setting
+) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]), textarea, select) {
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+  background-color: var(--grx-bg3) !important;
+  border: 1px solid var(--grx-border) !important;
+  border-radius: 9px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .025) !important;
+}
+html[data-grx-profile-edit][data-grx-theme] body :is(
+  #main, #mainContent, #content, .mainContent, .mainContentFloat, .pageContent,
+  .profileSettings, .editProfile, .edit-profile, .userEdit, .accountSettings,
+  #edit_user, .settingsSection, .bigBox, .gr-box, .gr-boxShadow, .formBox,
+  .form-box, fieldset, .setting
+) :is(input, textarea, select)::placeholder {
+  color: var(--grx-muted) !important;
+  -webkit-text-fill-color: var(--grx-muted) !important;
+  opacity: 1 !important;
+}
+html[data-grx-profile-edit][data-grx-theme] body :is(
+  #main, #mainContent, #content, .mainContent, .mainContentFloat, .pageContent,
+  .profileSettings, .editProfile, .edit-profile, .userEdit, .accountSettings,
+  #edit_user, .settingsSection, .bigBox, .gr-box, .gr-boxShadow, .formBox,
+  .form-box, fieldset, .setting
+) :is(input, textarea, select):focus {
+  border-color: var(--grx-accent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--grx-accent) 20%, transparent) !important;
+}
+html[data-grx-profile-edit][data-grx-theme] body :is(
+  #main, #mainContent, #content, .mainContent, .mainContentFloat, .pageContent,
+  .profileSettings, .editProfile, .edit-profile, .userEdit, .accountSettings,
+  #edit_user, .settingsSection, .bigBox, .gr-box, .gr-boxShadow, .formBox,
+  .form-box, fieldset, .setting
+) :is(input[type="submit"], button[type="submit"], .gr-button, [class*="Button--primary"]) {
+  color: var(--grx-accent-fg) !important;
+  -webkit-text-fill-color: var(--grx-accent-fg) !important;
+  background: var(--grx-accent) !important;
+  border: 1px solid var(--grx-accent) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 5px 14px color-mix(in srgb, var(--grx-accent) 20%, transparent) !important;
+}
+html[data-grx-profile-edit][data-grx-theme] body :is(
+  #main, #mainContent, #content, .mainContent, .mainContentFloat, .pageContent,
+  .profileSettings, .editProfile, .edit-profile, .userEdit, .accountSettings,
+  #edit_user, .settingsSection, .bigBox, .gr-box, .gr-boxShadow, .formBox,
+  .form-box, fieldset, .setting
+) input:is([type="checkbox"], [type="radio"]) { accent-color: var(--grx-accent) !important; }
+
+/* Shared native panels: correct common unreadable light-theme remnants while
+   respecting original geometry and leaving book-cover/recommendation palettes alone. */
+html[data-grx-theme] body :is(
+  .flash, .notice, .error, .warning, .infoBox, .sidebarBox, .reviewForm,
+  .reviewFormContainer, .reviewText, .reviewTextContainer, .bookReview, .userInfoTable
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  border-color: var(--grx-border) !important;
+}
+html[data-grx-theme] body :is(input, textarea, select, option):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+}
+
+/* ---------- 7. Header palette, search field, dropdowns ---------- */
+
+/* Header palette: each theme uses one opaque surface and its paired foreground.
+   Storybook retains its designed deep-teal header with warm light text. */
+html[data-grx-theme]:not([data-grx-theme="storybook"]) {
+  --grx-header-bg: var(--grx-bg2);
+  --grx-header-fg: var(--grx-fg);
+  --grx-header-muted: var(--grx-muted);
+  --grx-header-control-bg: var(--grx-bg3);
+  --grx-header-control-border: var(--grx-border);
+  --grx-header-hover: color-mix(in srgb, var(--grx-accent) 14%, var(--grx-bg3));
+  --grx-header-icon-bg: color-mix(in srgb, var(--grx-accent) 13%, var(--grx-header-bg));
+  --grx-header-icon-fg: var(--grx-header-fg);
+  --grx-header-icon-border: color-mix(in srgb, var(--grx-accent) 28%, var(--grx-header-control-border));
+}
+html[data-grx-theme="storybook"] {
+  --grx-header-bg: #243b42;
+  --grx-header-fg: #f1e6cd;
+  --grx-header-muted: #d5d0bd;
+  --grx-header-control-bg: #304a51;
+  --grx-header-control-border: #496168;
+  --grx-header-hover: #385962;
+  --grx-header-icon-bg: #304a51;
+  --grx-header-icon-fg: #f1e6cd;
+  --grx-header-icon-border: #587179;
+}
+
+/* One uninterrupted navbar surface. Navigation items share the same foreground;
+   only hover/active states get a subtle tint, not separate colored borders. */
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .siteHeader__topLevel, .Header,
+  header[class*="Header" i], nav[class*="Header" i]
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-header-fg) !important;
+  background: var(--grx-header-bg) !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--grx-header-control-border) !important;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, .09) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+  backdrop-filter: blur(18px) saturate(125%);
+}
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .siteHeader__topLevel, .Header,
+  header[class*="Header" i], nav[class*="Header" i]
+) :is(a, button, [role="button"], [role="navigation"], span, p, strong, b, em, small, label, li):not(.grx-preserve-native-colors):not(.grx-logo-link) {
+  color: var(--grx-header-fg) !important;
+  -webkit-text-fill-color: currentColor;
+  text-decoration-color: currentColor;
+}
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .siteHeader__topLevel, .Header,
+  header[class*="Header" i], nav[class*="Header" i]
+) :is(a, button, [role="button"], [aria-expanded="true"], [aria-current="page"]):not(.grx-preserve-native-colors):not(.grx-logo-link):not(.grx-icon-btn) {
+  border-color: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+}
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .siteHeader__topLevel, .Header,
+  header[class*="Header" i], nav[class*="Header" i]
+) :is(a, button, [role="button"]):not(.grx-preserve-native-colors):not(.grx-logo-link):not(.grx-icon-btn):hover,
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .siteHeader__topLevel, .Header,
+  header[class*="Header" i], nav[class*="Header" i]
+) :is([aria-expanded="true"], [aria-current="page"]):not(.grx-preserve-native-colors):not(.grx-logo-link):not(.grx-icon-btn) {
+  color: var(--grx-header-fg) !important;
+  background-color: var(--grx-header-hover) !important;
+}
+/* Header SVG paint is handled in the final icon section after content.js identifies monochrome artwork.
+   Do not blanket-recolor SVG descendants here: doing so flattens native multicolor icons. */
+/* Keep original brand artwork as-is but theme any text-based logo/wordmark. */
+html[data-grx-theme] body .grx-logo-link:not(.grx-preserve-native-colors),
+html[data-grx-theme] body .grx-logo-link:not(.grx-preserve-native-colors) :is(span, div, p, b, strong, em, small, label) {
+  color: var(--grx-header-fg) !important;
+  -webkit-text-fill-color: var(--grx-header-fg) !important;
+  text-decoration: none !important;
+}
+
+/* Search is a single integrated control whose input, placeholder, button and icon
+   are all readable against the active theme. The logo artwork is not involved. */
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .Header, header[class*="Header" i]
+) form:has(input[type="search"], input[name="q"], input[placeholder*="search" i]) {
+  color: var(--grx-header-fg) !important;
+  background: var(--grx-header-control-bg) !important;
+  border: 1px solid var(--grx-header-control-border) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035) !important;
+}
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .Header, header[class*="Header" i]
+) :is(input[type="search"], input[name="q"], input[placeholder*="search" i]) {
+  color: var(--grx-header-fg) !important;
+  -webkit-text-fill-color: var(--grx-header-fg) !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  caret-color: var(--grx-accent) !important;
+  box-shadow: none !important;
+}
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .Header, header[class*="Header" i]
+) :is(input[type="search"], input[name="q"], input[placeholder*="search" i])::placeholder {
+  color: var(--grx-header-muted) !important;
+  -webkit-text-fill-color: var(--grx-header-muted) !important;
+  opacity: 1 !important;
+}
+
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .Header, header[class*="Header" i]
+) form:has(input[type="search"], input[name="q"], input[placeholder*="search" i]) :is(button, [role="button"], [aria-label*="search" i], [title*="search" i]) svg,
+html[data-grx-theme] body :is(
+  #topNavContainer, #siteHeader, .siteHeader, .Header, header[class*="Header" i]
+) form:has(input[type="search"], input[name="q"], input[placeholder*="search" i]) :is(button, [role="button"], [aria-label*="search" i], [title*="search" i]) svg * {
+  color: currentColor !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Dropdowns and mega-menus: one opaque outer surface, transparent internal columns,
+   readable text and links. This prevents the light-on-white secondary-column issue. */
+html[data-grx-theme] body :is(
+  [role="menu"], [role="listbox"], [data-testid*="dropdown" i], [data-testid*="popover" i],
+  [class*="Dropdown" i], [class*="MegaMenu" i], [class*="megaMenu" i],
+  [class*="BrowseMenu" i], [class*="browseMenu" i], [class*="Popover" i], [class*="popover" i]
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background: var(--grx-bg3) !important;
+  border-color: var(--grx-border) !important;
+  box-shadow: 0 18px 42px rgba(0,0,0,.24) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+  backdrop-filter: blur(18px) saturate(125%);
+}
+html[data-grx-theme] body :is(
+  [role="menu"], [role="listbox"], [data-testid*="dropdown" i], [data-testid*="popover" i],
+  [class*="Dropdown" i], [class*="MegaMenu" i], [class*="megaMenu" i],
+  [class*="BrowseMenu" i], [class*="browseMenu" i], [class*="Popover" i], [class*="popover" i]
+) :is(div, section, aside, ul, ol, li, [role="presentation"], [role="group"], [class*="Column" i], [class*="column" i]):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: color-mix(in srgb, var(--grx-border) 70%, transparent) !important;
+}
+
+html[data-grx-theme] body :is(
+  [role="menu"], [role="listbox"], [data-testid*="dropdown" i], [data-testid*="popover" i],
+  [class*="Dropdown" i], [class*="MegaMenu" i], [class*="megaMenu" i],
+  [class*="BrowseMenu" i], [class*="browseMenu" i], [class*="Popover" i], [class*="popover" i]
+) :is(a, [role="option"], [role="menuitem"]):not(.grx-preserve-native-colors) {
+  color: var(--grx-link) !important;
+  -webkit-text-fill-color: currentColor;
+}
+
+/* Restore themed surfaces to legacy white panels and wrapper blocks. Native flow is
+   preserved. The marked edition/recommendation shelves are intentionally excluded. */
+html[data-grx-theme] body :is(
+  #leftContainer, #rightContainer, .leftContainer, .rightContainer,
+  #main, #mainContent, #content, .mainContent, .mainContentFloat, .pageContent
+):not(.grx-preserve-native-colors):not(.grx-theme-bookshelf):not(.grx-theme-editions):not(.grx-theme-recommendations):not(.grx-theme-other-books):not(:has(.grx-theme-bookshelf)) {
+  color: var(--grx-fg) !important;
+  background-color: transparent !important;
+  background-image: none;
+}
+html[data-grx-theme] body :is(
+  .bigBox, .gr-box, .gr-boxShadow, .contentBox, .content-box, .infoBox, .sidebarBox,
+  .userInfoTable, .profileHeader, .profileInfo, .profileContent, .userProfileInfo,
+  .userProfileBio, .userStats, .friendBox, .friendsList, .followersList, .followingList,
+  .userReviews, .friendReviews, .userReview, .reviewForm, .reviewFormContainer,
+  .reviewTextContainer, .bookReview, .flash, .notice, .error, .warning, .formBox, .form-box,
+  .elementList, .resultsList, .listBox, .featuredBox
+):not(.grx-preserve-native-colors):not(.grx-theme-bookshelf):not(.grx-theme-editions):not(.grx-theme-recommendations):not(.grx-theme-other-books):not(:has(.grx-theme-bookshelf)) {
+  color: var(--grx-fg) !important;
+  background-color: color-mix(in srgb, var(--grx-bg2) 96%, var(--grx-bg)) !important;
+  border-color: var(--grx-border) !important;
+}
+html[data-grx-theme] body :is(
+  .bigBox, .gr-box, .gr-boxShadow, .contentBox, .content-box, .infoBox, .sidebarBox,
+  .userInfoTable, .profileHeader, .profileInfo, .profileContent, .userProfileInfo,
+  .userProfileBio, .userStats, .friendBox, .friendsList, .followersList, .followingList,
+  .userReviews, .friendReviews, .userReview, .reviewForm, .reviewFormContainer,
+  .reviewTextContainer, .bookReview, .flash, .notice, .error, .warning, .formBox, .form-box,
+  .elementList, .resultsList, .listBox, .featuredBox
+):not(.grx-preserve-native-colors):not(.grx-theme-bookshelf):not(.grx-theme-editions):not(.grx-theme-recommendations):not(.grx-theme-other-books):not(:has(.grx-theme-bookshelf))
+  :is(h1, h2, h3, h4, h5, h6, p, span, li, td, th, label, strong, b, em, small, dt, dd, legend, figcaption):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: currentColor;
+}
+html[data-grx-theme] body :is(
+  .greyText, .grey, .smallText, time, [class*="subdued" i], [class*="secondaryText" i],
+  [class*="metadataLabel" i], [class*="caption" i]
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-muted) !important;
+  -webkit-text-fill-color: currentColor;
+  opacity: 1 !important;
+}
+
+/* Search pages, profile pages, forms, and content in the main column share the same
+   readable controls, while disabled controls remain clearly disabled. */
+html[data-grx-theme] body { color: var(--grx-fg) !important; }
+html[data-grx-theme] body :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+  background-color: var(--grx-bg3) !important;
+  border-color: var(--grx-border) !important;
+  caret-color: var(--grx-accent) !important;
+}
+html[data-grx-theme] body :is(input, textarea, select):not(.grx-preserve-native-colors)::placeholder {
+  color: var(--grx-muted) !important;
+  -webkit-text-fill-color: var(--grx-muted) !important;
+  opacity: 1 !important;
+}
+html[data-grx-theme] body :is(button, input[type="button"], input[type="submit"], [role="button"]):not(.grx-preserve-native-colors) {
+  text-shadow: none !important;
+  border-color: var(--grx-border) !important;
+}
+html[data-grx-theme] body :is(button, input[type="button"], [role="button"]):not(.gr-button):not([class*="Button--primary"]):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+}
+html[data-grx-theme] body :is(.gr-button, .gr-button--large, [class*="Button--primary"], [class*="Button--wtr"], input[type="submit"], button[type="submit"]):not(.grx-preserve-native-colors) {
+  color: var(--grx-accent-fg) !important;
+  -webkit-text-fill-color: var(--grx-accent-fg) !important;
+  background-color: var(--grx-accent) !important;
+  border-color: var(--grx-accent) !important;
+}
+html[data-grx-theme] body :is(.gr-button, .gr-button--large, [class*="Button--primary"], [class*="Button--wtr"], input[type="submit"], button[type="submit"]):not(.grx-preserve-native-colors) *:not(.grx-preserve-native-colors) {
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor;
+}
+
+/* Keep the Goodreads book-cover art intact and leave recommendation/edition shelves
+   completely native as requested. All shared headings and description text outside
+   those explicitly preserved shelves use the theme foreground. */
+html[data-grx-theme] body :is(
+  #main, #mainContent, #content, .mainContent, .mainContentFloat, .pageContent,
+  .bookDescription, .readable, .reviewText, .reviewTextContainer, .review, .reviewTextContainer p,
+  .userInfoTable, .profileBio, .profileDescription
+):not(.grx-preserve-native-colors):not(.grx-theme-bookshelf):not(.grx-theme-editions):not(.grx-theme-recommendations):not(.grx-theme-other-books) {
+  color: var(--grx-fg) !important;
+}
+
+/* Keep motion subtle and avoid animated color flashes when users change themes. */
+html[data-grx-theme] body :is(a, button, input, select, textarea, [role="button"]) {
+  transition: color .14s ease, background-color .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-grx-theme] body *, html[data-grx-theme] body *::before, html[data-grx-theme] body *::after {
+    transition: none !important; animation: none !important; scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- 8. Book page, reviews, profile and friends panels ---------- */
+
+/* Review cards in themed modes should feel quiet and editorial, not outlined.
+   Keep the soft surface and depth while removing colored-theme review borders. */
+html[data-grx-theme] body :is(
+  .review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer,
+  .bookReview, .reviewItem, [class*="ReviewCard" i], [data-testid*="review-card" i],
+  #bookReviews .review, #reviews .review, .userReviews .review, .friendReviews .review
+):not(.grx-preserve-native-colors):not(.grx-theme-bookshelf):not(.grx-theme-editions):not(.grx-theme-recommendations):not(.grx-theme-other-books) {
+  border: 0 !important;
+  outline: 0 !important;
+  border-color: transparent !important;
+  background: color-mix(in srgb, var(--grx-bg2) 76%, transparent) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .085) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(118%);
+  backdrop-filter: blur(14px) saturate(118%);
+}
+
+/* Book detail page: use a small set of glass surfaces for information blocks.
+   Do not change columns, order, cover sizing, or recommendation shelves. */
+html[data-grx-book-page][data-grx-theme] body :is(
+  #bookDataBox, .bookDataBox, #bookDetails, .bookDetails, .bookDetailsBox,
+  #description, .bookDescription, .bookMeta, .BookPage__description,
+  .BookPage__mainContent, #bookReviews, .bookReviews, .reviewFormContainer,
+  .bookPage__description, [data-testid="bookDetails"]
+):not(.grx-preserve-native-colors):not(.grx-theme-bookshelf):not(.grx-theme-editions):not(.grx-theme-recommendations):not(.grx-theme-other-books):not(:has(.grx-theme-bookshelf)) {
+  background: color-mix(in srgb, var(--grx-bg2) 70%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--grx-border) 38%, transparent) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .075) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter: blur(16px) saturate(120%);
+}
+/* The review-card rule takes precedence over page panels, avoiding review borders. */
+html[data-grx-book-page][data-grx-theme] body :is(
+  .review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer,
+  .bookReview, .reviewItem, [class*="ReviewCard" i], #bookReviews .review, #reviews .review
+):not(.grx-preserve-native-colors):not(.grx-theme-bookshelf):not(.grx-theme-editions):not(.grx-theme-recommendations):not(.grx-theme-other-books) {
+  border: 0 !important;
+  border-color: transparent !important;
+}
+
+/* Profile and connections: modern translucent cards with generous corners while
+   keeping the existing Goodreads column structure and image dimensions. */
+html[data-grx-profile-page][data-grx-theme] body :is(
+  .profileHeader, .profileHeader__details, .userProfile, .userProfileInfo,
+  .userInfo, .userDetails, .profileInfo, .userProfileBio, .userStats,
+  .friendBox, .friendsList, .followersList, .followingList, .userInfoTable,
+  [data-testid*="profile-card" i], [class*="ProfileCard" i], [class*="profile-card" i]
+):not(.grx-preserve-native-colors):not(.grx-theme-bookshelf):not(.grx-theme-editions):not(.grx-theme-recommendations):not(.grx-theme-other-books):not(:has(.grx-theme-bookshelf)) {
+  background: color-mix(in srgb, var(--grx-bg2) 78%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--grx-border) 48%, transparent) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .075) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(118%);
+  backdrop-filter: blur(16px) saturate(118%);
+}
+/* Profile reviews follow the borderless review treatment, even inside a glass panel. */
+html[data-grx-profile-page][data-grx-theme] body :is(
+  .review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer,
+  .bookReview, .reviewItem, [class*="ReviewCard" i]
+):not(.grx-preserve-native-colors):not(.grx-theme-bookshelf):not(.grx-theme-editions):not(.grx-theme-recommendations):not(.grx-theme-other-books) {
+  border: 0 !important;
+  border-color: transparent !important;
+}
+
+/* Goodreads' Read / Currently Reading / Want to Read controls often use legacy
+   dropdown-menu markup outside modern role=menu containers. Give those menus an
+   opaque active-theme surface and explicitly color every text layer. */
+html[data-grx-theme] body :is(
+  .dropdown-menu, .dropdown-menu[aria-hidden="false"], .wtrStatusDropdown,
+  .wtrShelfDropdown, [class*="wtrDropdown" i], [class*="shelfDropdown" i],
+  [class*="ShelfMenu" i], [class*="shelf-menu" i], [class*="shelf-menu" i][role="menu"],
+  [role="menu"], [role="listbox"], [role="menuitem"], [role="option"]
+):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: var(--grx-bg3) !important;
+  border-color: var(--grx-border) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+  opacity: 1 !important;
+}
+html[data-grx-theme] body :is(
+  .dropdown-menu, .wtrStatusDropdown, .wtrShelfDropdown, [class*="wtrDropdown" i],
+  [class*="shelfDropdown" i], [class*="ShelfMenu" i], [class*="shelf-menu" i],
+  [role="menu"], [role="listbox"]
+) :is(a, button, span, p, li, label, small, strong, b, em, [role="menuitem"], [role="option"]):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+}
+html[data-grx-theme] body :is(
+  .dropdown-menu, .wtrStatusDropdown, .wtrShelfDropdown, [class*="wtrDropdown" i],
+  [class*="shelfDropdown" i], [class*="ShelfMenu" i], [class*="shelf-menu" i],
+  [role="menu"], [role="listbox"]
+) :is(a, button, [role="menuitem"], [role="option"]):is(:hover, :focus, [aria-selected="true"]):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+  background-color: color-mix(in srgb, var(--grx-accent) 18%, var(--grx-bg3)) !important;
+}
+html[data-grx-theme] body option:not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  background-color: var(--grx-bg3) !important;
+}
+
+/* Storybook uses warm-paper surfaces and deep-teal ink. Reassert that text pair
+   outside the top navbar so legacy inline text colors cannot leave scattered
+   near-white labels on paper-colored panels. Links retain a separate teal color. */
+html[data-grx-theme="storybook"] body :is(
+  p, span, li, td, th, dt, dd, label, strong, b, i, em, small, cite, blockquote,
+  legend, figcaption, summary, h1, h2, h3, h4, h5, h6, .greyText, .grey, .smallText,
+  time, [class*="subdued" i], [class*="secondaryText" i], [class*="metadataLabel" i],
+  [class*="caption" i]
+):not(.grx-preserve-native-colors):not(header *):not(nav *):not(#topNavContainer *):not(#siteHeader *):not(.siteHeader *):not(.Header *) {
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: currentColor !important;
+  opacity: 1 !important;
+}
+html[data-grx-theme="storybook"] body a:not(.grx-preserve-native-colors):not(header *):not(nav *):not(#topNavContainer *):not(#siteHeader *):not(.siteHeader *):not(.Header *) {
+  color: var(--grx-link) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+html[data-grx-theme="storybook"] body :is(input, textarea, select, option):not(.grx-preserve-native-colors) {
+  color: #1f3238 !important;
+  -webkit-text-fill-color: #1f3238 !important;
+  background-color: #fffaf0 !important;
+  border-color: #cdbb95 !important;
+}
+
+/* Friends/followers are compact, translucent and responsive without changing native flow. */
+html[data-grx-profile-page][data-grx-theme] body :is(.friendBox, .friendsList, .followersList, .followingList, .friend, .follower, [class*="friendCard" i], [class*="followerCard" i]) {
+  border-radius: 14px !important;
+  background: color-mix(in srgb, var(--grx-bg2) 76%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--grx-border) 30%, transparent) !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,.055) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+}
+/* Light themes should feel clean: reviews have neither outlines nor drop shadows. */
+html[data-grx-theme="fiction"] body :is(.review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer, .bookReview, .reviewItem, [class*="ReviewCard" i]),
+html[data-grx-theme="aurora"] body :is(.review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer, .bookReview, .reviewItem, [class*="ReviewCard" i]),
+html[data-grx-theme="storybook"] body :is(.review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer, .bookReview, .reviewItem, [class*="ReviewCard" i]) {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+/* Choice Awards, New Releases and browse subsections can have inline white cards. */
+html[data-grx-theme] body :is([class*="choiceAward" i], [class*="ChoiceAward" i], [class*="newRelease" i], [class*="NewRelease" i], [class*="browse" i], [class*="Browse" i], [class*="discovery" i], [class*="Discovery" i]) :is(.white, .whiteBox, .whiteBackground, [style*="background-color: rgb(255" i], [style*="background: rgb(255" i]) {
+  background-color: var(--grx-bg2) !important;
+  color: var(--grx-fg) !important;
+  border-color: color-mix(in srgb, var(--grx-border) 45%, transparent) !important;
+}
+
+/* The series, editions, and related-book widgets should retain their original Goodreads look. */
+html[data-grx-book-page][data-grx-theme] body :is(
+  #bookSeries, .bookSeries, [class*="series" i], [id*="series" i],
+  #otherBooks, .otherBooks, #otherEditions, .otherEditions,
+  #similarBooks, .similarBooks, [class*="edition" i], [class*="readersAlsoEnjoyed" i]
+) {
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+}
+html[data-grx-book-page][data-grx-theme] body :is(
+  #bookSeries, .bookSeries, [class*="series" i], [id*="series" i],
+  #otherBooks, .otherBooks, #otherEditions, .otherEditions,
+  #similarBooks, .similarBooks, [class*="edition" i], [class*="readersAlsoEnjoyed" i]
+) :is(img, a, span, div, p, h2, h3, h4):not(.grx-preserve-native-colors) {
+  box-shadow: none !important;
+}
+/* Light-theme reviews: no extra outlines/shadows, more breathing room inside the review. */
+html[data-grx-theme="fiction"] body :is(.review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer, .bookReview, .reviewItem, [class*="ReviewCard" i]),
+html[data-grx-theme="aurora"] body :is(.review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer, .bookReview, .reviewItem, [class*="ReviewCard" i]),
+html[data-grx-theme="storybook"] body :is(.review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer, .bookReview, .reviewItem, [class*="ReviewCard" i]) {
+  padding: 18px 20px !important;
+  margin-block: 12px !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+/* Friends tab: add breathing room between native sections, without changing their width or height. */
+html[data-grx-theme] body :is(#friends, #friendsList, #following, #followers, .friendsPage, .friends-page, .friendsContent, .friends-content, #friendsContainer, .friendsContainer) {
+  row-gap: 16px !important;
+}
+html[data-grx-theme] body :is(#friends, #friendsList, #following, #followers, .friendsPage, .friends-page, .friendsContent, .friends-content, #friendsContainer, .friendsContainer) > * + * {
+  margin-top: 14px !important;
+}
+html[data-grx-theme] body :is(.friendBox, .friendsList, .followersList, .followingList, .friend, .follower, [class*="friendCard" i], [class*="followerCard" i]) {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--grx-bg2) 92%, var(--grx-accent) 8%),
+    color-mix(in srgb, var(--grx-bg2) 96%, transparent)) !important;
+  border-radius: 14px !important;
+  padding: 14px !important;
+}
+/* Friends-tab invite/search modules: clean glass tint, keep native dimensions and controls. */
+html[data-grx-theme] body :is(#friends, #friendsList, #following, #followers, .friendsPage, .friends-page, .friendsContent, .friends-content, #friendsContainer, .friendsContainer) :is(.greyBox, .whiteBox, .section, .module, .card, [class*="invite" i], [class*="findFriend" i], [class*="friendSearch" i]) {
+  border: 0 !important;
+  outline: 0 !important;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--grx-bg2) 94%, var(--grx-accent) 6%),
+    color-mix(in srgb, var(--grx-bg2) 97%, transparent)) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,.045) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(112%);
+  backdrop-filter: blur(12px) saturate(112%);
+}
+/* Profile: remove nested card borders, organize content, and use one subtle gradient treatment. */
+html[data-grx-profile-page][data-grx-theme] body :is(
+  .profileHeader, .profileHeader__details, .userProfile, .userProfileInfo,
+  .userInfo, .userDetails, .profileInfo, .userProfileBio, .userStats,
+  .userInfoTable, [data-testid*="profile-card" i], [class*="ProfileCard" i], [class*="profile-card" i]
+) {
+  border: 0 !important;
+  outline: 0 !important;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--grx-bg2) 91%, var(--grx-accent) 9%),
+    color-mix(in srgb, var(--grx-bg2) 97%, transparent)) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,.055) !important;
+  padding: 16px !important;
+  -webkit-backdrop-filter: blur(16px) saturate(118%);
+  backdrop-filter: blur(16px) saturate(118%);
+}
+html[data-grx-profile-page][data-grx-theme] body :is(.profileHeader, .profileHeader__details, .userProfile, .userProfileInfo, .userInfo, .userDetails, .profileInfo, .userProfileBio, .userStats, .userInfoTable) :is(h1, h2, h3, h4, p, ul, ol, dl) {
+  margin-block: 0 10px !important;
+  line-height: 1.55 !important;
+}
+html[data-grx-profile-page][data-grx-theme] body :is(.profileHeader, .profileHeader__details, .userProfile, .userProfileInfo, .userInfo, .userDetails, .profileInfo, .userProfileBio, .userStats, .userInfoTable) :is(ul, ol, dl) {
+  padding-inline-start: 18px !important;
+}
+html[data-grx-profile-page][data-grx-theme] body :is(.profileHeader, .profileHeader__details, .userProfile, .userProfileInfo, .userInfo, .userDetails, .profileInfo, .userProfileBio, .userStats, .userInfoTable) :is(.review, .userReview, .friendReview, .reviewCard, .reviewContainer, .bookReview, .reviewItem) {
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 18px 20px !important;
+}
+
+/* Restore native book-series/related-books modules, including their colors. */
+html[data-grx-book-page][data-grx-theme] body :is(
+  #bookSeries, .bookSeries, [class*="series" i], [id*="series" i],
+  #otherBooks, .otherBooks, #otherEditions, .otherEditions,
+  #similarBooks, .similarBooks, [class*="edition" i], [class*="readersAlsoEnjoyed" i]
+),
+html[data-grx-book-page][data-grx-theme] body :is(
+  #bookSeries, .bookSeries, [class*="series" i], [id*="series" i],
+  #otherBooks, .otherBooks, #otherEditions, .otherEditions,
+  #similarBooks, .similarBooks, [class*="edition" i], [class*="readersAlsoEnjoyed" i]
+) *:not(.grx-preserve-native-colors) {
+  background: revert !important;
+  background-color: revert !important;
+  color: revert !important;
+  -webkit-text-fill-color: revert !important;
+  border-color: revert !important;
+  border-radius: revert !important;
+  box-shadow: revert !important;
+  outline: revert !important;
+  -webkit-backdrop-filter: revert !important;
+  backdrop-filter: revert !important;
+}
+/* Friends page: give section links, search and invite blocks more breathing room. */
+html[data-grx-theme] body :is(#friends, #friendsList, #following, #followers, .friendsPage, .friends-page, .friendsContent, .friends-content, #friendsContainer, .friendsContainer, #friendPage, .friendPage) {
+  line-height: 1.55 !important;
+}
+html[data-grx-theme] body :is(#friends, #friendsList, #following, #followers, .friendsPage, .friends-page, .friendsContent, .friends-content, #friendsContainer, .friendsContainer, #friendPage, .friendPage) :is(a, p, li) {
+  margin-block: 5px !important;
+}
+html[data-grx-theme] body :is(#friends, #friendsList, #following, #followers, .friendsPage, .friends-page, .friendsContent, .friends-content, #friendsContainer, .friendsContainer, #friendPage, .friendPage) :is(.greyBox, .whiteBox, .section, .module, .card, [class*="invite" i], [class*="findFriend" i], [class*="friendSearch" i]) {
+  padding: 18px 20px !important;
+  margin-block: 16px !important;
+  border: 0 !important;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--grx-bg2) 93%, var(--grx-accent) 7%),
+    color-mix(in srgb, var(--grx-bg2) 98%, transparent)) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 5px 16px rgba(0,0,0,.035) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(110%);
+  backdrop-filter: blur(12px) saturate(110%);
+}
+/* Profile: one soft glass treatment, no nested outlines or competing cards. */
+html[data-grx-profile-page][data-grx-theme] body :is(.profileHeader, .profileHeader__details, .userProfile, .userProfileInfo, .userInfo, .userDetails, .profileInfo, .userProfileBio, .userStats, .userInfoTable, [class*="ProfileCard" i], [class*="profile-card" i]) {
+  border: 0 !important;
+  outline: 0 !important;
+  background: linear-gradient(125deg,
+    color-mix(in srgb, var(--grx-bg2) 91%, var(--grx-accent) 9%),
+    color-mix(in srgb, var(--grx-bg2) 97%, transparent)) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,.045) !important;
+  padding: 18px 20px !important;
+  -webkit-backdrop-filter: blur(14px) saturate(112%);
+  backdrop-filter: blur(14px) saturate(112%);
+}
+html[data-grx-profile-page][data-grx-theme] body :is(.profileHeader, .profileHeader__details, .userProfile, .userProfileInfo, .userInfo, .userDetails, .profileInfo, .userProfileBio, .userStats, .userInfoTable) :is(h1, h2, h3, h4) {
+  line-height: 1.3 !important;
+  margin: 0 0 12px !important;
+}
+html[data-grx-profile-page][data-grx-theme] body :is(.profileHeader, .profileHeader__details, .userProfile, .userProfileInfo, .userInfo, .userDetails, .profileInfo, .userProfileBio, .userStats, .userInfoTable) :is(p, li, dt, dd) {
+  line-height: 1.55 !important;
+  margin-block: 0 8px !important;
+}
+
+/* A consistent pale-glass logo tile; retain native logo artwork and use no effects. */
+html[data-grx-theme] body .grx-logo-link,
+html[data-grx-theme] body .grx-logo-link:not(.grx-preserve-native-colors) {
+  background-color: rgba(255,255,255,.84) !important;
+  color: #263238 !important;
+  -webkit-text-fill-color: #263238 !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+/* Dark-theme review modules must never retain Goodreads' white inline panels or
+   legacy dark text. Scope to reviews, not book-series/edition widgets. */
+html:is([data-grx-theme="dark-academia"], [data-grx-theme="thriller"], [data-grx-theme="mystical"]) body :is(
+  .review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer,
+  .bookReview, .reviewItem, [class*="ReviewCard" i], [class*="review" i][class*="box" i],
+  [id*="review" i][class*="container" i]
+) {
+  color: var(--grx-fg) !important;
+  background: var(--grx-bg2) !important;
+  border-color: var(--grx-border) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+}
+html:is([data-grx-theme="dark-academia"], [data-grx-theme="thriller"], [data-grx-theme="mystical"]) body :is(
+  .review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer,
+  .bookReview, .reviewItem, [class*="ReviewCard" i], [class*="review" i][class*="box" i],
+  [id*="review" i][class*="container" i]
+) :is(p, span, div, li, blockquote, strong, em, small, label, h1, h2, h3, h4):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+}
+html:is([data-grx-theme="dark-academia"], [data-grx-theme="thriller"], [data-grx-theme="mystical"]) body :is(
+  .review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer,
+  .bookReview, .reviewItem, [class*="ReviewCard" i], [class*="review" i][class*="box" i],
+  [id*="review" i][class*="container" i]
+) :is(a, a:visited) {
+  color: var(--grx-link) !important;
+  -webkit-text-fill-color: var(--grx-link) !important;
+}
+html:is([data-grx-theme="dark-academia"], [data-grx-theme="thriller"], [data-grx-theme="mystical"]) body :is(
+  .review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer,
+  .bookReview, .reviewItem, [class*="ReviewCard" i], [class*="review" i][class*="box" i],
+  [id*="review" i][class*="container" i]
+) :is([style*="background-color: rgb(255" i], [style*="background: rgb(255" i], .white, .whiteBox, .whiteBackground) {
+  background: var(--grx-bg2) !important;
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+}
+
+/* Storybook and other themes share one review-author/avatar alignment rule. */
+html[data-grx-theme] body :is(.review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer, .bookReview, .reviewItem, [class*="ReviewCard" i]) :is(.reviewHeader, .reviewer, .reviewUser, .reviewerInfo, .userInfo, .reviewerDetails, [class*="reviewer" i]) {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+}
+html[data-grx-theme] body :is(.review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer, .bookReview, .reviewItem, [class*="ReviewCard" i]) :is(.reviewHeader img, .reviewer img, .reviewUser img, .reviewerInfo img, .userInfo img, [class*="reviewer" i] img) {
+  flex: 0 0 auto !important;
+  object-fit: cover !important;
+}
+
+/* Keep the Goodreads brand readable in every theme. The pale logo tile is
+   intentionally plain; do not tint or hide the original logo artwork. */
+
+html[data-grx-theme="storybook"] body :is(#topNavContainer, #siteHeader, .siteHeader, .siteHeader__topLevel, .Header, header[class*="Header" i], nav[class*="Header" i]) :is(a, button, [role="button"], span, strong, b, em, small, label, li):not(.grx-logo-link):not(.grx-preserve-native-colors) {
+  color: #fff3d8 !important;
+  -webkit-text-fill-color: #fff3d8 !important;
+}
+html[data-grx-theme="storybook"] body :is(#topNavContainer, #siteHeader, .siteHeader, .siteHeader__topLevel, .Header, header[class*="Header" i], nav[class*="Header" i]) :is(input[type="search"], input[name="q"], input[placeholder*="search" i]) {
+  color: #fff3d8 !important;
+  -webkit-text-fill-color: #fff3d8 !important;
+  background: #304a51 !important;
+  border-color: #71868a !important;
+}
+html[data-grx-theme="storybook"] body :is(#topNavContainer, #siteHeader, .siteHeader, .siteHeader__topLevel, .Header, header[class*="Header" i], nav[class*="Header" i]) :is(input[type="search"], input[name="q"], input[placeholder*="search" i])::placeholder {
+  color: #e3ddca !important;
+  opacity: 1 !important;
+}
+
+/* Avoid the general page-surface rules making dark-theme review internals
+   alternate between light and dark fills. All descendants inherit legible
+   foreground colors unless they are links. */
+html:is([data-grx-theme="dark-academia"], [data-grx-theme="thriller"], [data-grx-theme="mystical"], [data-grx-theme="storybook"]) body :is(
+  .review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer,
+  .bookReview, .reviewItem, [class*="ReviewCard" i], [class*="review" i][class*="box" i],
+  [id*="review" i][class*="container" i]
+) {
+  background-color: var(--grx-bg2) !important;
+  color: var(--grx-fg) !important;
+}
+html:is([data-grx-theme="dark-academia"], [data-grx-theme="thriller"], [data-grx-theme="mystical"], [data-grx-theme="storybook"]) body :is(
+  .review, .userReview, .friendReview, .gr-reviewBox, .reviewCard, .reviewContainer,
+  .bookReview, .reviewItem, [class*="ReviewCard" i], [class*="review" i][class*="box" i],
+  [id*="review" i][class*="container" i]
+) :is(p, span, div, li, blockquote, strong, em, small, label, h1, h2, h3, h4, h5, h6):not(.grx-preserve-native-colors) {
+  color: var(--grx-fg) !important;
+  -webkit-text-fill-color: var(--grx-fg) !important;
+}
+/* ---------- 9. Navbar (final layer): logo, bar, tabs, dropdowns, footer ---------- */
+/* Logo: always a light tile so the dark Goodreads wordmark is visible in every theme.
+   Only background-COLOR is set; the background shorthand would erase the logo image. */
+html[data-grx-theme] body :is(.siteHeader__logo, a.grx-logo-link, .grx-logo-link):not(#grx-x):not(#grx-y):not(#grx-z) {
+  background-color: #f6f0e3 !important;
+  color: #322c27 !important;
+  -webkit-text-fill-color: #322c27 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+html[data-grx-theme] body .grx-logo-link :is(span, div, strong, b, p, em, small, label):not(#grx-x):not(#grx-y) { color: #322c27 !important; -webkit-text-fill-color: #322c27 !important; }
+/* The bar is one theme surface. Wrappers inside it show that surface: no white, no borders, no shadows. */
+html[data-grx-theme] body :is(#topNavContainer, #siteHeader, .siteHeader, .grx-bar):not(#grx-x) { background-color: var(--grx-header-bg) !important; color: var(--grx-header-fg) !important; }
+html[data-grx-theme] body .grx-bar :is(div, ul, ol, li, nav, header, section, span):not(form):not(form *):not(.grx-dropdown):not(.grx-dropdown *):not(.grx-logo-link):not(.grx-logo-link *):not(.grx-icon-btn):not(.grx-icon-btn *):not(.grx-badge):not(#grx-x) {
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+/* Tabs and icons are static: no pills, hover fills, outlines, glow or motion. */
+html[data-grx-theme] body .grx-bar :is(a, button, [role="button"]):not(form *):not(.grx-dropdown):not(.grx-dropdown *):not(.grx-logo-link):not(.grx-logo-link *):not(.grx-icon-btn):not(#grx-x),
+html[data-grx-theme] body .grx-bar :is(a, button, [role="button"]):not(form *):not(.grx-dropdown):not(.grx-dropdown *):not(.grx-logo-link):not(.grx-logo-link *):not(.grx-icon-btn):not(#grx-x):is(:hover, :focus, :active, :visited, [aria-expanded="true"], [aria-current="page"]) {
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+  color: var(--grx-header-fg) !important;
+  -webkit-text-fill-color: var(--grx-header-fg) !important;
+}
+html[data-grx-theme] body .grx-bar :is(a, button):focus-visible:not(#grx-x) { outline: 2px solid var(--grx-accent) !important; outline-offset: -2px; }
+/* Dropdown panels are always opaque, including their inner columns. */
+html[data-grx-theme] body .grx-dropdown:not(#grx-x),
+html[data-grx-theme] body .grx-dropdown :is(div, ul, ol, li, section, nav, header):not(#grx-x) {
+  background-color: var(--grx-header-bg) !important;
+  color: var(--grx-header-fg) !important;
+  opacity: 1 !important;
+}
+html[data-grx-theme] body .grx-dropdown:not(#grx-x) {
+  border: 1px solid var(--grx-header-control-border, var(--grx-border)) !important;
+  box-shadow: 0 14px 30px rgba(0,0,0,.28) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+html[data-grx-theme] body .grx-dropdown a:not(#grx-x) { color: var(--grx-header-fg) !important; background-color: transparent !important; }
+html[data-grx-theme] body .grx-dropdown a:is(:hover, :focus-visible):not(#grx-x) { background-color: var(--grx-header-hover, var(--grx-bg3)) !important; }
+/* Footer follows the theme. */
+html[data-grx-theme] body :is(footer, #footer, .siteFooter, #siteFooter, footer[class*="Footer" i]):not(#grx-x) {
+  background-color: var(--grx-bg2) !important;
+  color: var(--grx-fg) !important;
+  border-top: 1px solid var(--grx-border) !important;
+}
+html[data-grx-theme] body :is(footer, #footer, .siteFooter, #siteFooter) :is(div, ul, ol, li, section, nav, p, span, small, dl, dt, dd, table, tr, td):not(#grx-x) {
+  background-color: transparent !important;
+  color: var(--grx-fg) !important;
+  border-color: var(--grx-border) !important;
+}
+html[data-grx-theme] body :is(footer, #footer, .siteFooter, #siteFooter) a:not(#grx-x) { color: var(--grx-link) !important; background-color: transparent !important; }
+/* My Books page: legible text on theme surfaces. */
+html[data-grx-books-page][data-grx-theme] body :is(.leftContainer, .rightContainer, .mainContent, .mainContentFloat, #content, .content, #paginatedShelfList, #shelvesSection, .selectedShelf, .userShelf) :is(p, span, li, td, th, label, dt, dd, h1, h2, h3, h4, small, b, strong, em, div):not(.grx-logo-link):not(.grx-preserve-native-colors):not(#grx-x) { color: var(--grx-fg) !important; }
+html[data-grx-books-page][data-grx-theme] body :is(.greyText, .smallText, .gr-metadataLabel, .uitext, .shelfStat, .bookshelves .greyText):not(#grx-x) { color: var(--grx-muted) !important; }
+html[data-grx-books-page][data-grx-theme] body :is(.leftContainer, .rightContainer, .mainContent, #content, .content, #paginatedShelfList, #shelvesSection) a:not(.grx-logo-link):not(.Button):not([class*="Button"]):not(#grx-x) { color: var(--grx-link) !important; }
+html[data-grx-books-page][data-grx-theme] body :is(#booksBody, table.table, #books, .tableList) :is(tr, td, th, thead, tbody):not(#grx-x) { background-color: transparent !important; border-color: var(--grx-border) !important; }
+
+/* Navbar: Goodreads' own layout positions the logo, tabs, search and icons. Nothing is moved, and the
+   bar paints one solid surface (no blur layer that could shift or show through panels). */
+html[data-grx-theme] body :is(#topNavContainer, #siteHeader, .siteHeader, .grx-bar):not(#grx-x) {
+  background-image: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  translate: none !important;
+}
+html[data-grx-theme] body .grx-bar *:not(#grx-x) { translate: none !important; }
+/* Preserve native sprite backgrounds and icon pseudo-elements. Nav link effects are disabled on
+   the controls themselves below, but descendant artwork is deliberately left untouched. */
+
+/* Dropdown, notification and account panels: solid, never see-through. */
+html[data-grx-theme] body :is(
+  .grx-dropdown, [role="menu"], [role="dialog"]
+):not(.grx-logo-link):not(.grx-icon-btn):not(#grx-x) {
+  background-color: var(--grx-header-bg) !important;
+  background-image: none !important;
+  color: var(--grx-header-fg) !important;
+  opacity: 1 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+/* Do not use class-name substring rules on notification/account controls themselves. Those elements
+   often use background sprites for the glyph; removing background-image makes the button look empty. */
+html[data-grx-theme] body .grx-dropdown:not(#grx-x) {
+  z-index: 99999 !important;
+  border: 1px solid var(--grx-header-control-border, var(--grx-border)) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .35) !important;
+}
+html[data-grx-theme] body .grx-dropdown :is(div, ul, ol, li, section, nav, header, footer, form, span, p):not(#grx-x) {
+  background-color: var(--grx-header-bg) !important;
+  background-image: none !important;
+  color: var(--grx-header-fg) !important;
+  opacity: 1 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+html[data-grx-theme] body .grx-dropdown :is(a, button, h1, h2, h3, h4, strong, b, small, label):not(#grx-x) {
+  color: var(--grx-header-fg) !important;
+  -webkit-text-fill-color: var(--grx-header-fg) !important;
+  opacity: 1 !important;
+}
+html[data-grx-theme] body .grx-dropdown a:is(:hover, :focus-visible):not(#grx-x),
+html[data-grx-theme] body .grx-dropdown li:hover:not(#grx-x),
+html[data-grx-theme] body .grx-dropdown [role="menuitem"]:hover:not(#grx-x) {
+  background-color: var(--grx-header-hover, var(--grx-bg3)) !important;
+}
+html[data-grx-theme] body .grx-dropdown :is(hr, [role="separator"]):not(#grx-x) { border-color: var(--grx-header-control-border, var(--grx-border)) !important; }
+
+/* ---- Blocks / Table switcher (genres, shelves, lists) ---- */
+.grx-browse-native-hidden { display: none !important; }
+html[data-grx-theme] .grx-browse-tools {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  margin: 0 0 16px; padding: 10px 14px;
+  background: var(--grx-bg2); border: 1px solid var(--grx-border); border-radius: var(--grx-card-radius, 12px);
+}
+html[data-grx-theme] .grx-browse-tools-copy { display: flex; flex-direction: column; gap: 2px; }
+html[data-grx-theme] .grx-browse-tools-copy strong { color: var(--grx-fg) !important; font-size: 14px; }
+html[data-grx-theme] .grx-browse-tools-copy span { color: var(--grx-muted) !important; font-size: 12px; }
+html[data-grx-theme] .grx-browse-switch { display: inline-flex; border: 1px solid var(--grx-border); border-radius: 999px; overflow: hidden; }
+html[data-grx-theme] .grx-browse-switch button {
+  appearance: none; border: 0 !important; border-radius: 0 !important; margin: 0; padding: 6px 16px; cursor: pointer;
+  background: transparent !important; color: var(--grx-fg) !important; font: inherit; font-size: 13px;
+}
+html[data-grx-theme] .grx-browse-switch button.active { background: var(--grx-accent) !important; color: var(--grx-accent-fg, #fff) !important; }
+html[data-grx-theme] .grx-browse-generated-table { overflow-x: auto; }
+html[data-grx-theme] .grx-browse-generated-table table { width: 100%; border-collapse: collapse; }
+html[data-grx-theme] .grx-browse-generated-table :is(th, td) { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--grx-border); background: transparent; color: var(--grx-fg); }
+html[data-grx-theme] .grx-browse-generated-table th { color: var(--grx-muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+html[data-grx-theme] .grx-browse-generated-table img { width: 40px; height: 60px; object-fit: cover; border-radius: 3px; vertical-align: middle; margin-right: 10px; box-shadow: var(--grx-cover-shadow); }
+html[data-grx-theme] .grx-browse-generated-table a { color: var(--grx-link) !important; }
+
+/* ---- Header icons ----
+   Give small header actions a theme-aware contrast surface, without changing their dimensions.
+   Native image avatars, CSS sprites/pseudo-elements, and multicolor SVG artwork remain untouched. */
+html[data-grx-theme] body .grx-bar .grx-icon-btn:not(#grx-x) {
+  color: var(--grx-header-icon-fg, var(--grx-header-fg)) !important;
+  -webkit-text-fill-color: currentColor !important;
+  background-color: var(--grx-header-icon-bg, var(--grx-header-control-bg)) !important;
+  border-color: var(--grx-header-icon-border, var(--grx-header-control-border)) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  mix-blend-mode: normal !important;
+  position: relative !important;
+  border-radius: 999px !important;
+  transition: none !important;
+  animation: none !important;
+}
+/* Do not put a tile behind a real avatar; preserve the source artwork exactly as Goodreads supplies it. */
+html[data-grx-theme] body .grx-bar .grx-icon-btn:has(img):not(#grx-x) {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+html[data-grx-theme] body .grx-bar .grx-icon-btn::before,
+html[data-grx-theme] body .grx-bar .grx-icon-btn::after {
+  color: var(--grx-header-icon-fg, var(--grx-header-fg));
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+html[data-grx-theme] body .grx-bar .grx-icon-btn :is(svg, img):not(#grx-x) {
+  opacity: 1 !important;
+  visibility: visible !important;
+  mix-blend-mode: normal !important;
+}
+/* Only single-paint vector glyphs are recolored to the theme foreground. Multi-color SVGs are left native. */
+html[data-grx-theme] body .grx-bar .grx-icon-btn svg.grx-header-icon-monochrome:not(#grx-x) {
+  color: var(--grx-header-icon-fg, var(--grx-header-fg)) !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  overflow: visible !important;
+  filter: none !important;
+}
+html[data-grx-theme] body .grx-bar .grx-icon-btn svg.grx-header-icon-monochrome :is(path, circle, ellipse, rect, polygon, line, polyline, use):not(#grx-x) {
+  color: currentColor !important;
+  fill: currentColor !important;
+}
+html[data-grx-theme] body .grx-bar .grx-icon-btn svg.grx-header-icon-monochrome :is(path, circle, ellipse, rect, polygon, line, polyline, use)[fill="none"]:not(#grx-x) {
+  fill: none !important;
+}
+html[data-grx-theme] body .grx-bar .grx-icon-btn svg.grx-header-icon-monochrome :is(path, circle, ellipse, rect, polygon, line, polyline, use)[stroke]:not([stroke="none"]):not(#grx-x) {
+  stroke: currentColor !important;
+}
+html[data-grx-theme] body .grx-bar .grx-icon-btn img:not(#grx-x) {
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  box-shadow: none !important;
+  mix-blend-mode: normal !important;
+}
+/* Keep Goodreads' native notification counter: do not add a second badge layer. */
+html[data-grx-theme] body .grx-bar .grx-icon-btn .grx-badge:not(#grx-x) {
+  position: static !important;
+  min-width: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  display: inline !important;
+  border-radius: 0 !important;
+  font: inherit !important;
+  background: transparent !important;
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+  box-shadow: none !important;
+}
+
+/* Native cover safety for search/list/book pages: don't put glass, color overlays, or theme effects
+   on either the book artwork or its immediate cover wrapper. Keep any native background-image intact. */
+html[data-grx-theme] body :is(
+  .bookCover, .bookImage, .coverImage, [class*="BookCover" i], [class*="coverImage" i],
+  [class*="BookCard__cover" i], [class*="BookCard__image" i], [data-testid*="bookCover" i]
+):not(#grx-x) {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  mix-blend-mode: normal !important;
+}
+html[data-grx-theme] body :is(
+  img[src*="/books/"], img[src*="/books1/"], img[src*="compressed.photo.goodreads.com/books/"],
+  img.bookCover, .bookCover img, .bookImage img, .coverImage img,
+  [class*="BookCover" i] img, [class*="BookCard__cover" i] img,
+  [class*="BookCard__image" i] img, [data-testid*="bookCover" i] img
+):not(#grx-x) {
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  mix-blend-mode: normal !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+

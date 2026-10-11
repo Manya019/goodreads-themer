@@ -64,5 +64,5 @@ This policy may be updated if the extension's functionality or data practices ch
 
 For questions about this privacy policy or Goodreads Glass Theme, contact:
 
-**Email:** [INSERT YOUR CONTACT EMAIL]
+**Email:** sharmamanya.019@gmail.com
 
